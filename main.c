@@ -136,7 +136,8 @@ int main(int argc, char *argv[])
 		}
 		
 		//2-4. 동전 줍기 
-		coinResult = board_getBoardCoin(pos);
+		coinResult = 0;
+		coinResult = board_getBoardCoin(player_position[turn]);
 		if(coinResult > 0)
 			printf("	-> Lucky! %s got %d coins\n", player_name[turn], coinResult);
 		player_coin[turn] += coinResult;
@@ -162,7 +163,7 @@ int main(int argc, char *argv[])
 	} while(flag_end == 0);
 		//3. 정리(승자 계산, 출력 등)
 
-	printf("GAME END!");
+	printf("GAME END!\n");
 	
 	int cnt=0;
 	for(i=0;i<N_PLAYER;i++)
@@ -183,10 +184,12 @@ int main(int argc, char *argv[])
 			{
 				max_coin = player_coin[i];
 				winner = i;
+				printf("winner is %s\n", player_name[winner]);
 			}
 		}
+		else if(player_status[0] == PLAYERSTATUS_DIE && player_status[1] == PLAYERSTATUS_DIE && player_status[2] == PLAYERSTATUS_DIE)
+			printf("shark wins");	
 	}
-	printf("winner is %s\n", player_name[winner]);
 
 	system("PAUSE");
 	return 0;

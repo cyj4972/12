@@ -25,18 +25,15 @@ int board_initBoard(void)
 	
 	board_sharkPosition = SHARK_INITPOS;
 	
-	for(i=0;i<N_COINPOS;i++)
+	int flag = 0;
+	while(flag == 0)
 	{
-		int flag = 0;
-		while(flag == 0)
+		for(i=0;i<N_COINPOS;i++)
 		{
-			int allocPos = rand()%N_BOARD;
-			if(board_coin[allocPos] == 0)
-			{
-				board_coin[allocPos] = rand()%MAX_COIN + 1;
-				flag = 1;
-			}
+			if(board_coin[i] == 0)
+				board_coin[i] = rand()%MAX_COIN + 1;
 		}
+		flag = 1;
 	}
 }
 int board_printBoardStatus(void)
@@ -64,13 +61,10 @@ int board_getBoardStatus(int pos)
 }
 
 int board_getBoardCoin(int pos)
-{
-	int coin = board_coin[pos];
+{	int coin = board_coin[pos];
 	board_coin[pos] = 0;
-	return board_coin[pos];
+	return coin;
 }
-
-//int board_getSharkPosition(void)
 
 int board_stepShark(void)
 {
@@ -78,7 +72,7 @@ int board_stepShark(void)
 	int i;
 	for(i=board_sharkPosition + 1;i<=board_sharkPosition + step;i++)
 	{
-		if(i>=0&& i<N_BOARD)
+		if(i>=0 && i<N_BOARD)
 			board_status[i] = BOARDSTATUS_NOK;
 	}
 	
